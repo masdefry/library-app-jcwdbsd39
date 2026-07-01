@@ -1,0 +1,42 @@
+export const books = [
+  {
+    isbn: "978-0143134770",
+    title: "A Gentleman in Moscow",
+    subtitle: "Amor Towles",
+    author: "Amor Towles",
+    genre: "Fiction",
+    status: "available",
+  },
+  {
+    isbn: "978-0593135204",
+    title: "Project Hail Mary",
+    subtitle: "Andy Weir",
+    author: "Andy Weir",
+    genre: "Sci-Fi",
+    status: "borrowed",
+  },
+  {
+    isbn: "978-0385547345",
+    title: "The Lincoln Highway",
+    subtitle: "Amor Towles",
+    author: "Amor Towles",
+    genre: "Historical",
+    status: "available",
+  },
+  {
+    isbn: "978-1501110368",
+    title: "The Seven Husbands of Evelyn Hugo",
+    subtitle: "Taylor Jenkins Reid",
+    author: "T. Jenkins Reid",
+    genre: "Romance",
+    status: "available",
+  },
+  {
+    isbn: "978-0525559474",
+    title: "The Midnight Library",
+    subtitle: "Matt Haig",
+    author: "Matt Haig",
+    genre: "Contemporary",
+    status: "borrowed",
+  },
+];
