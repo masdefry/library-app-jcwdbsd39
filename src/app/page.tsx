@@ -9,7 +9,7 @@ import {
 } from '@/features/auth/validations/auth.validation';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useAuthStore, User } from '@/stores/useAuthStore';
 import { ApiResponse } from '@/types/api-response.types';
 import { useRouter } from 'next/navigation';
@@ -41,14 +41,10 @@ export default function LoginPage() {
       toast.success(res?.data?.message || 'Login successful');
       router.push('/admin');
     },
-    onError: (error) => {
-      toast.error('Invalid email or password.');
+    onError: (error: AxiosError<ApiResponse<null>>) => {
+      toast.error(error?.response?.data?.message || 'An error occurred');
     },
   });
-
-  const onTest = () => {
-    alert('test');
-  };
 
   return (
     <main className='relative flex min-h-screen items-center justify-center overflow-hidden bg-[#f7f9fb] px-4 py-6 md:px-16'>

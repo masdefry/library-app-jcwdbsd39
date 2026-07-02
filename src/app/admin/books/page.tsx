@@ -1,4 +1,5 @@
 import { books } from "@/data/books";
+import Link from "next/link";
 
 function StatusBadge({ status }: { status: "available" | "borrowed" }) {
   if (status === "available") {
@@ -67,10 +68,10 @@ export default function BookManagementPage() {
           </p>
         </div>
 
-        <button className="flex items-center gap-2 rounded-xl bg-[#2036bd] px-6 py-2 text-white shadow-sm transition-colors hover:bg-[#3e52d5]">
+        <Link href='/admin/books/create' className="flex items-center gap-2 rounded-xl bg-[#2036bd] px-6 py-2 text-white shadow-sm transition-colors hover:bg-[#3e52d5]">
           <span className="material-symbols-outlined">add</span>
           Create New Book
-        </button>
+        </Link>
       </div>
 
       {/* Stats */}

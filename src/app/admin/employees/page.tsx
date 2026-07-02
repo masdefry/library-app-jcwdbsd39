@@ -7,4 +7,4 @@ function AdminEmployeesPage() {
   return <EmployeeManagementPage />;
 };
 
-export default useAuthGuard(AdminEmployeesPage, [Role.ADMIN, Role.SUPER_ADMIN]);
+export default useAuthGuard(AdminEmployeesPage, [Role.ADMIN]);

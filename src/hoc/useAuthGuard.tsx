@@ -13,9 +13,11 @@ export default function useAuthGuard<P extends object>(
 
     if (!isAuthorized) {
       return (
-        <h1 className='font-bold text-2xl'>
-          User role unauthorized to open this page
-        </h1>
+        <div className='flex h-screen items-center justify-center'>
+          <h1 className='font-bold text-md'>
+            You are unauthorized to see this page
+          </h1>
+        </div>
       );
     }
 
