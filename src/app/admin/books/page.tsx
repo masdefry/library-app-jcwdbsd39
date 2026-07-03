@@ -74,6 +74,13 @@ export default function BookManagementPage() {
     });
   };
 
+  const onHandlePageChange = (page: number) => {
+    setFilters((prevFilters: any) => ({
+      ...prevFilters, 
+      page: page
+    }))
+  }
+
   const { data: booksData, isLoading: isGettingBooks } = useQuery({
     queryKey: ['books', debouncedFilters],
     queryFn: async () => {
@@ -190,7 +197,7 @@ export default function BookManagementPage() {
             <tbody className='divide-y divide-[#c5c5d7]'>
               {booksData?.data?.map((book: any) => (
                 <tr
-                  key={book.isbn}
+                  key={book.id}
                   className='transition-colors hover:bg-[#f2f4f6]'
                 >
                   <td className='px-6 py-4 text-sm text-[#454654]'>
@@ -241,9 +248,8 @@ export default function BookManagementPage() {
                 chevron_left
               </span>
             </button>
-
             {totalPages.map((page) => (
-              <button className='h-9 w-9 rounded-lg bg-[#2036bd] text-sm font-bold text-white shadow-sm'>
+              <button onClick={() => onHandlePageChange(page)} className={`h-9 w-9 rounded-lg ${page === filters?.page? 'bg-[#2036bd]' : 'bg-gray-300'} text-sm font-bold text-white shadow-sm`}>
                 {page}
               </button>
             ))}
