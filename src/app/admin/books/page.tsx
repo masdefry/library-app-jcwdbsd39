@@ -1,9 +1,11 @@
 'use client';
 import { books } from '@/data/books';
 import { ApiPaginatedResponse } from '@/types/api-response.types';
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import Link from 'next/link';
+import { useState } from 'react';
+import { useDebounce } from 'use-debounce';
 
 function StatusBadge({ status }: { status: 'available' | 'borrowed' }) {
   if (status === 'available') {
@@ -58,15 +60,33 @@ function StatCard({
 }
 
 export default function BookManagementPage() {
+  const [filters, setFilters] = useState<any>({
+    search: '',
+    page: 1,
+  });
+
+  const debouncedFilters = useDebounce(filters, 1000);
+
+  const onHandleSearchChange = (input: string) => {
+    setFilters({
+      search: input,
+      page: 1,
+    });
+  };
+
   const { data: booksData, isLoading: isGettingBooks } = useQuery({
-    queryKey: ['books'],
+    queryKey: ['books', debouncedFilters],
     queryFn: async () => {
       const res = await axios.get<ApiPaginatedResponse<any>>(
         'http://localhost:8000/api/v1/books',
+        {
+          params: filters,
+        },
       );
 
       return res?.data;
     },
+    placeholderData: keepPreviousData
   });
 
   const totalPages = Array.from(
@@ -134,14 +154,12 @@ export default function BookManagementPage() {
         <div className='flex flex-col justify-between gap-4 border-b border-[#c5c5d7] bg-white px-6 py-4 md:flex-row md:items-center'>
           <h3 className='text-2xl font-semibold text-[#191c1e]'>Book List</h3>
 
-          <button className='group flex items-center gap-2 rounded-lg border border-[#c5c5d7] bg-white px-4 py-2 transition-all hover:border-[#2036bd] hover:bg-[#2036bd]/5'>
-            <span className='material-symbols-outlined text-[#454654] group-hover:text-[#2036bd]'>
-              filter_list
-            </span>
-            <span className='text-sm font-bold text-[#191c1e] group-hover:text-[#2036bd]'>
-              Filter
-            </span>
-          </button>
+          <input
+            type='text'
+            placeholder='Search by title or author'
+            onChange={(e) => onHandleSearchChange(e.currentTarget.value)}
+            className='border border-gray-300 rounded-md p-1'
+          />
         </div>
 
         <div className='overflow-x-auto'>
